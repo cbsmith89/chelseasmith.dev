@@ -1,4 +1,4 @@
-# Professional CV Website
+# chelseasmith.dev
 
 A modern, data-driven CV website showcasing technology consulting expertise in data, analytics, and AI.
 
@@ -51,7 +51,7 @@ Buttons, badges, cards, tables, filters, tabs, segmented controls, metric tiles,
 1. Clone the repository:
    ```bash
    git clone <repository-url>
-   cd cv-website
+   cd chelseasmith.dev
    ```
 
 2. Open `index.html` in your browser:
