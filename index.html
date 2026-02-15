@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Chen · Technology Consultant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Light mode colors */
+            --color-primary: #0A0E14;
+            --color-surface: #FAFBFC;
+            --color-surface-elevated: #FFFFFF;
+            --color-accent: #2563EB;
+            --color-accent-hover: #1D4ED8;
+            --color-highlight: #F59E0B;
+            --color-border: #E5E7EB;
+            --color-border-subtle: #F3F4F6;
+            --color-text-primary: #0A0E14;
+            --color-text-secondary: #6B7280;
+            --color-text-tertiary: #9CA3AF;
+            
+            /* Semantic colors */
+            --color-success: #10B981;
+            --color-warning: #F59E0B;
+            --color-danger: #EF4444;
+            
+            /* Typography */
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            /* Spacing (8px base) */
+            --space-0: 0;
+            --space-4: 4px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --space-40: 40px;
+            --space-48: 48px;
+            --space-64: 64px;
+            --space-80: 80px;
+            --space-96: 96px;
+            
+            /* Border radius */
+            --radius-10: 10px;
+            --radius-12: 12px;
+            --radius-14: 14px;
+            --radius-16: 16px;
+            --radius-full: 999px;
+            
+            /* Easing */
+            --ease-standard: cubic-bezier(0.2, 0.0, 0, 1);
+            --ease-emphasized: cubic-bezier(0.2, 0.8, 0.2, 1);
+            
+            /* Durations */
+            --duration-fast: 120ms;
+            --duration-normal: 200ms;
+            --duration-slow: 280ms;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-primary: #F9FAFB;
+                --color-surface: #0A0E14;
+                --color-surface-elevated: #161B22;
+                --color-accent: #3B82F6;
+                --color-accent-hover: #60A5FA;
+                --color-highlight: #FBBF24;
+                --color-border: #21262D;
+                --color-border-subtle: #161B22;
+                --color-text-primary: #F9FAFB;
+                --color-text-secondary: #9CA3AF;
+                --color-text-tertiary: #6B7280;
+            }
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 14px;
+            line-height: 22px;
+            color: var(--color-text-primary);
+            background: var(--color-surface);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography scale */
+        .text-display {
+            font-family: var(--font-display);
+            font-size: 44px;
+            line-height: 52px;
+            font-weight: 600;
+        }
+
+        .text-h1 {
+            font-family: var(--font-display);
+            font-size: 36px;
+            line-height: 44px;
+            font-weight: 600;
+        }
+
+        .text-h2 {
+            font-family: var(--font-display);
+            font-size: 28px;
+            line-height: 36px;
+            font-weight: 600;
+        }
+
+        .text-h3 {
+            font-family: var(--font-display);
+            font-size: 22px;
+            line-height: 30px;
+            font-weight: 600;
+        }
+
+        .text-h4 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            line-height: 26px;
+            font-weight: 600;
+        }
+
+        .text-body-lg {
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .text-body {
+            font-size: 14px;
+            line-height: 22px;
+        }
+
+        .text-caption {
+            font-size: 12px;
+            line-height: 18px;
+            color: var(--color-text-secondary);
+        }
+
+        .text-micro {
+            font-size: 11px;
+            line-height: 16px;
+            color: var(--color-text-tertiary);
+        }
+
+        .text-mono {
+            font-family: var(--font-mono);
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            height: 64px;
+            background: var(--color-surface-elevated);
+            border-bottom: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-32);
+            z-index: 100;
+            transition: border-color var(--duration-fast) var(--ease-standard),
+                        backdrop-filter var(--duration-fast) var(--ease-standard);
+        }
+
+        .top-nav.scrolled {
+            border-bottom-color: var(--color-border);
+            backdrop-filter: blur(8px);
+            background: rgba(250, 251, 252, 0.9);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .top-nav.scrolled {
+                background: rgba(10, 14, 20, 0.9);
+            }
+        }
+
+        .nav-identity {
+            display: flex;
+            align-items: center;
+            gap: var(--space-16);
+        }
+
+        .nav-identity .text-h4 {
+            margin: 0;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: var(--space-24);
+            border-bottom: 1px solid var(--color-border-subtle);
+        }
+
+        .tab {
+            position: relative;
+            padding: var(--space-16) 0;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--duration-fast) var(--ease-standard);
+            cursor: pointer;
+        }
+
+        .tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--color-accent);
+            transform: scaleX(0);
+            transition: transform var(--duration-normal) var(--ease-standard);
+        }
+
+        .tab:hover {
+            color: var(--color-text-primary);
+        }
+
+        .tab.active {
+            color: var(--color-text-primary);
+        }
+
+        .tab.active::after {
+            transform: scaleX(1);
+        }
+
+        /* Button */
+        .button {
+            height: 40px;
+            padding: 0 var(--space-16);
+            border: none;
+            border-radius: var(--radius-12);
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-standard);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+            text-decoration: none;
+        }
+
+        .button-primary {
+            background: var(--color-accent);
+            color: white;
+        }
+
+        .button-primary:hover {
+            background: var(--color-accent-hover);
+        }
+
+        .button-secondary {
+            background: var(--color-surface-elevated);
+            color: var(--color-text-primary);
+            border: 1px solid var(--color-border);
+        }
+
+        .button-secondary:hover {
+            background: var(--color-border-subtle);
+        }
+
+        .button-ghost {
+            background: transparent;
+            color: var(--color-text-secondary);
+        }
+
+        .button-ghost:hover {
+            background: var(--color-border-subtle);
+            color: var(--color-text-primary);
+        }
+
+        /* Icon Button */
+        .icon-button {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: var(--radius-10);
+            background: transparent;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .icon-button:hover {
+            background: var(--color-border-subtle);
+            color: var(--color-text-primary);
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            height: 24px;
+            padding: 0 var(--space-8);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-neutral {
+            background: var(--color-border-subtle);
+            color: var(--color-text-secondary);
+        }
+
+        .badge-accent {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--color-accent);
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--color-success);
+        }
+
+        /* Card */
+        .card {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-16);
+            padding: var(--space-24);
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-32);
+        }
+
+        /* Page */
+        .page {
+            display: none;
+            animation: fadeIn var(--duration-slow) var(--ease-standard);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Home Page */
+        .hero {
+            padding: var(--space-96) 0 var(--space-64);
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-title {
+            margin-bottom: var(--space-16);
+        }
+
+        .hero-description {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-32);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-12);
+        }
+
+        /* Metrics Strip */
+        .metrics-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-16);
+            margin-bottom: var(--space-80);
+        }
+
+        .metric-tile {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-16);
+            padding: var(--space-24);
+        }
+
+        .metric-value {
+            font-family: var(--font-display);
+            font-size: 36px;
+            line-height: 44px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-4);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            line-height: 18px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Selected Work */
+        .section {
+            margin-bottom: var(--space-80);
+        }
+
+        .section-header {
+            margin-bottom: var(--space-32);
+        }
+
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--space-24);
+        }
+
+        .work-card {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-16);
+            padding: var(--space-24);
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .work-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .work-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: var(--space-16);
+        }
+
+        .work-card-title {
+            margin-bottom: var(--space-4);
+        }
+
+        .work-card-meta {
+            color: var(--color-text-tertiary);
+            font-size: 12px;
+        }
+
+        .work-card-description {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-16);
+        }
+
+        .work-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-8);
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--space-24);
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: var(--space-32);
+            min-height: calc(100vh - 64px);
+        }
+
+        /* Side Panel */
+        .side-panel {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-16);
+            padding: var(--space-24);
+            height: fit-content;
+            position: sticky;
+            top: 88px;
+        }
+
+        .panel-section {
+            margin-bottom: var(--space-24);
+        }
+
+        .panel-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .panel-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-tertiary);
+            margin-bottom: var(--space-12);
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+            cursor: pointer;
+            padding: var(--space-4) 0;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .checkbox-label span {
+            font-size: 14px;
+        }
+
+        /* Segmented Control */
+        .segmented-control {
+            display: flex;
+            background: var(--color-border-subtle);
+            border-radius: var(--radius-10);
+            padding: var(--space-4);
+        }
+
+        .segmented-option {
+            flex: 1;
+            padding: var(--space-8) var(--space-12);
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-10);
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .segmented-option.active {
+            background: var(--color-surface-elevated);
+            color: var(--color-text-primary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Dashboard Main */
+        .dashboard-main {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-24);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-16);
+            padding: var(--space-16);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-chips {
+            display: flex;
+            gap: var(--space-8);
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-4);
+            height: 32px;
+            padding: 0 var(--space-12);
+            background: var(--color-accent);
+            color: white;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .filter-chip button {
+            width: 16px;
+            height: 16px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Metrics Grid */
+        .dashboard-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-16);
+        }
+
+        .dashboard-metric-tile {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-16);
+            padding: var(--space-20);
+        }
+
+        .metric-big-number {
+            font-family: var(--font-display);
+            font-size: 44px;
+            line-height: 52px;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-4);
+        }
+
+        .metric-delta {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-4);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .metric-delta.positive {
+            color: var(--color-success);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-16);
+            padding: var(--space-24);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: var(--space-24);
+        }
+
+        .chart-title {
+            margin-bottom: var(--space-4);
+        }
+
+        .chart-subtitle {
+            color: var(--color-text-secondary);
+            font-size: 12px;
+        }
+
+        .chart-actions {
+            display: flex;
+            gap: var(--space-8);
+        }
+
+        /* Skill Distribution Chart */
+        .skill-bars {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-16);
+        }
+
+        .skill-bar-row {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+
+        .skill-bar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .skill-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .skill-value {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--color-text-secondary);
+        }
+
+        .skill-bar-bg {
+            height: 8px;
+            background: var(--color-border-subtle);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+        }
+
+        .skill-bar-fill {
+            height: 100%;
+            background: var(--color-accent);
+            border-radius: var(--radius-full);
+            transition: width 600ms var(--ease-emphasized);
+        }
+
+        /* Details Table */
+        .details-table-container {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-16);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: var(--space-16) var(--space-24);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table thead {
+            background: var(--color-border-subtle);
+            position: sticky;
+            top: 0;
+        }
+
+        .table th {
+            text-align: left;
+            padding: var(--space-12) var(--space-16);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-text-secondary);
+        }
+
+        .table td {
+            padding: var(--space-16);
+            border-top: 1px solid var(--color-border-subtle);
+            font-size: 14px;
+        }
+
+        .table tbody tr:hover {
+            background: var(--color-border-subtle);
+        }
+
+        .table .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .side-panel {
+                position: relative;
+                top: 0;
+            }
+
+            .dashboard-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-nav {
+                padding: 0 var(--space-16);
+            }
+
+            .container {
+                padding: 0 var(--space-16);
+            }
+
+            .dashboard-container {
+                padding: var(--space-16);
+            }
+
+            .hero {
+                padding: var(--space-64) 0 var(--space-48);
+            }
+
+            .work-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-strip {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav" id="topNav">
+        <div class="nav-identity">
+            <h4 class="text-h4">Alex Chen</h4>
+            <span class="badge badge-accent">Available for Projects</span>
+        </div>
+        <div class="nav-actions">
+            <div class="tabs">
+                <a href="#" class="tab active" data-page="home">Home</a>
+                <a href="#" class="tab" data-page="dashboard">Dashboard</a>
+                <a href="#" class="tab" data-page="experience">Experience</a>
+            </div>
+            <button class="button button-primary">Contact</button>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div class="page active" id="home">
+        <div class="container">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="text-display hero-title">Technology Consultant</h1>
+                    <p class="text-body-lg hero-description">
+                        I help organizations leverage data, analytics, and AI to drive strategic decisions and operational excellence. 
+                        15+ years building data platforms, leading digital transformations, and deploying production ML systems.
+                    </p>
+                    <div class="hero-actions">
+                        <button class="button button-primary">View Dashboard</button>
+                        <button class="button button-secondary">Download CV</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Metrics Strip -->
+            <div class="metrics-strip">
+                <div class="metric-tile">
+                    <div class="metric-value">150+</div>
+                    <div class="metric-label">Projects Delivered</div>
+                </div>
+                <div class="metric-tile">
+                    <div class="metric-value">$2.4B</div>
+                    <div class="metric-label">Value Generated</div>
+                </div>
+                <div class="metric-tile">
+                    <div class="metric-value">25</div>
+                    <div class="metric-label">Enterprise Clients</div>
+                </div>
+                <div class="metric-tile">
+                    <div class="metric-value">98%</div>
+                    <div class="metric-label">Client Satisfaction</div>
+                </div>
+            </div>
+
+            <!-- Selected Work -->
+            <section class="section">
+                <div class="section-header">
+                    <h2 class="text-h2">Selected Work</h2>
+                </div>
+                <div class="work-grid">
+                    <div class="work-card">
+                        <div class="work-card-header">
+                            <div>
+                                <h3 class="text-h4 work-card-title">AI-Powered Risk Assessment Platform</h3>
+                                <div class="work-card-meta">Financial Services · 2024</div>
+                            </div>
+                        </div>
+                        <p class="work-card-description">
+                            Built real-time ML platform processing 50M+ transactions daily, reducing false positives by 67% 
+                            and saving $45M annually in operational costs.
+                        </p>
+                        <div class="work-card-tags">
+                            <span class="badge badge-neutral">Python</span>
+                            <span class="badge badge-neutral">TensorFlow</span>
+                            <span class="badge badge-neutral">Kubernetes</span>
+                            <span class="badge badge-neutral">AWS</span>
+                        </div>
+                    </div>
+
+                    <div class="work-card">
+                        <div class="work-card-header">
+                            <div>
+                                <h3 class="text-h4 work-card-title">Supply Chain Analytics Suite</h3>
+                                <div class="work-card-meta">Manufacturing · 2023</div>
+                            </div>
+                        </div>
+                        <p class="work-card-description">
+                            Designed end-to-end analytics platform enabling predictive inventory optimization across 
+                            200+ distribution centers, improving fill rates by 23%.
+                        </p>
+                        <div class="work-card-tags">
+                            <span class="badge badge-neutral">Snowflake</span>
+                            <span class="badge badge-neutral">dbt</span>
+                            <span class="badge badge-neutral">Tableau</span>
+                            <span class="badge badge-neutral">Airflow</span>
+                        </div>
+                    </div>
+
+                    <div class="work-card">
+                        <div class="work-card-header">
+                            <div>
+                                <h3 class="text-h4 work-card-title">Customer Intelligence Platform</h3>
+                                <div class="work-card-meta">Retail · 2023</div>
+                            </div>
+                        </div>
+                        <p class="work-card-description">
+                            Led data modernization and built unified customer view integrating 15+ data sources, 
+                            enabling personalization that increased conversion by 31%.
+                        </p>
+                        <div class="work-card-tags">
+                            <span class="badge badge-neutral">Databricks</span>
+                            <span class="badge badge-neutral">Spark</span>
+                            <span class="badge badge-neutral">Kafka</span>
+                            <span class="badge badge-neutral">GCP</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div class="page" id="dashboard">
+        <div class="dashboard-container">
+            <!-- Side Panel (Filters) -->
+            <aside class="side-panel">
+                <div class="panel-section">
+                    <div class="panel-title">Time Range</div>
+                    <div class="segmented-control">
+                        <button class="segmented-option" data-range="1y">1Y</button>
+                        <button class="segmented-option active" data-range="3y">3Y</button>
+                        <button class="segmented-option" data-range="5y">5Y</button>
+                        <button class="segmented-option" data-range="all">All</button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <div class="panel-title">Domain</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked data-filter="domain" value="financial">
+                            <span>Financial Services</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked data-filter="domain" value="retail">
+                            <span>Retail & E-commerce</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked data-filter="domain" value="healthcare">
+                            <span>Healthcare</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked data-filter="domain" value="manufacturing">
+                            <span>Manufacturing</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <div class="panel-title">Role</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked data-filter="role" value="architect">
+                            <span>Solution Architect</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked data-filter="role" value="lead">
+                            <span>Technical Lead</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked data-filter="role" value="consultant">
+                            <span>Senior Consultant</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <div class="panel-title">Technology</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked data-filter="tech" value="ml">
+                            <span>Machine Learning</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked data-filter="tech" value="cloud">
+                            <span>Cloud Platforms</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked data-filter="tech" value="data-eng">
+                            <span>Data Engineering</span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Dashboard Area -->
+            <main class="dashboard-main">
+                <!-- Filter Bar with Active Filters -->
+                <div class="filter-bar">
+                    <div class="filter-chips" id="activeFilters">
+                        <div class="filter-chip">
+                            All Domains
+                            <button aria-label="Remove filter">×</button>
+                        </div>
+                        <div class="filter-chip">
+                            All Roles
+                            <button aria-label="Remove filter">×</button>
+                        </div>
+                        <div class="filter-chip">
+                            Last 3 Years
+                            <button aria-label="Remove filter">×</button>
+                        </div>
+                    </div>
+                    <button class="button button-ghost text-caption">Clear All</button>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="dashboard-metrics">
+                    <div class="dashboard-metric-tile">
+                        <div class="metric-big-number">42</div>
+                        <div class="metric-label">Active Projects</div>
+                        <div class="metric-delta positive">↑ 12% vs last year</div>
+                    </div>
+                    <div class="dashboard-metric-tile">
+                        <div class="metric-big-number">18</div>
+                        <div class="metric-label">Tech Stacks</div>
+                        <div class="metric-delta positive">↑ 3 new this year</div>
+                    </div>
+                    <div class="dashboard-metric-tile">
+                        <div class="metric-big-number">2,400</div>
+                        <div class="metric-label">Hours Delivered</div>
+                        <div class="metric-delta positive">↑ 8% utilization</div>
+                    </div>
+                    <div class="dashboard-metric-tile">
+                        <div class="metric-big-number">94%</div>
+                        <div class="metric-label">Success Rate</div>
+                        <div class="metric-delta positive">↑ 2% improvement</div>
+                    </div>
+                </div>
+
+                <!-- Skill Distribution Chart -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div>
+                            <h3 class="text-h4 chart-title">Skill Distribution</h3>
+                            <p class="chart-subtitle">Hours invested by technology area</p>
+                        </div>
+                        <div class="chart-actions">
+                            <button class="icon-button" aria-label="Export data">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 13v4a1 1 0 01-1 1H4a1 1 0 01-1-1v-4M13 9l-3 3m0 0l-3-3m3 3V3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="skill-bars">
+                        <div class="skill-bar-row">
+                            <div class="skill-bar-header">
+                                <span class="skill-name">Machine Learning & AI</span>
+                                <span class="skill-value">850 hrs</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 0%" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-bar-header">
+                                <span class="skill-name">Data Engineering</span>
+                                <span class="skill-value">720 hrs</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 0%" data-width="72%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-bar-header">
+                                <span class="skill-name">Cloud Architecture</span>
+                                <span class="skill-value">640 hrs</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 0%" data-width="64%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-bar-header">
+                                <span class="skill-name">Analytics & BI</span>
+                                <span class="skill-value">520 hrs</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 0%" data-width="52%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-bar-header">
+                                <span class="skill-name">DevOps & MLOps</span>
+                                <span class="skill-value">380 hrs</span>
+                            </div>
+                            <div class="skill-bar-bg">
+                                <div class="skill-bar-fill" style="width: 0%" data-width="38%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Details Table -->
+                <div class="details-table-container">
+                    <div class="table-header">
+                        <h3 class="text-h4">Project Details</h3>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Project</th>
+                                <th>Domain</th>
+                                <th>Role</th>
+                                <th>Duration</th>
+                                <th>Tech Stack</th>
+                                <th>Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">Risk Assessment Platform</div>
+                                        <div class="text-caption">Real-time ML fraud detection</div>
+                                    </div>
+                                </td>
+                                <td>Financial Services</td>
+                                <td>Solution Architect</td>
+                                <td>
+                                    <div>12 months</div>
+                                    <div class="text-caption">Jan 2024 - Present</div>
+                                </td>
+                                <td>
+                                    <div class="tech-stack">
+                                        <span class="badge badge-neutral">Python</span>
+                                        <span class="badge badge-neutral">TensorFlow</span>
+                                        <span class="badge badge-neutral">AWS</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 500;">$45M saved</div>
+                                    <div class="text-caption">67% false positive reduction</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">Supply Chain Analytics</div>
+                                        <div class="text-caption">Predictive inventory optimization</div>
+                                    </div>
+                                </td>
+                                <td>Manufacturing</td>
+                                <td>Technical Lead</td>
+                                <td>
+                                    <div>9 months</div>
+                                    <div class="text-caption">Apr 2023 - Dec 2023</div>
+                                </td>
+                                <td>
+                                    <div class="tech-stack">
+                                        <span class="badge badge-neutral">Snowflake</span>
+                                        <span class="badge badge-neutral">dbt</span>
+                                        <span class="badge badge-neutral">Airflow</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 500;">23% improvement</div>
+                                    <div class="text-caption">Fill rate optimization</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">Customer Intelligence Platform</div>
+                                        <div class="text-caption">Unified customer 360 view</div>
+                                    </div>
+                                </td>
+                                <td>Retail</td>
+                                <td>Senior Consultant</td>
+                                <td>
+                                    <div>14 months</div>
+                                    <div class="text-caption">Feb 2023 - Mar 2024</div>
+                                </td>
+                                <td>
+                                    <div class="tech-stack">
+                                        <span class="badge badge-neutral">Databricks</span>
+                                        <span class="badge badge-neutral">Spark</span>
+                                        <span class="badge badge-neutral">GCP</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 500;">31% increase</div>
+                                    <div class="text-caption">Conversion rate lift</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">Healthcare Data Lake</div>
+                                        <div class="text-caption">HIPAA-compliant infrastructure</div>
+                                    </div>
+                                </td>
+                                <td>Healthcare</td>
+                                <td>Solution Architect</td>
+                                <td>
+                                    <div>18 months</div>
+                                    <div class="text-caption">Jun 2022 - Nov 2023</div>
+                                </td>
+                                <td>
+                                    <div class="tech-stack">
+                                        <span class="badge badge-neutral">Azure</span>
+                                        <span class="badge badge-neutral">Synapse</span>
+                                        <span class="badge badge-neutral">Power BI</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 500;">$12M ROI</div>
+                                    <div class="text-caption">First year value</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <div style="font-weight: 500;">Pricing Optimization Engine</div>
+                                        <div class="text-caption">Dynamic pricing ML models</div>
+                                    </div>
+                                </td>
+                                <td>Retail</td>
+                                <td>Technical Lead</td>
+                                <td>
+                                    <div>11 months</div>
+                                    <div class="text-caption">Jan 2022 - Nov 2022</div>
+                                </td>
+                                <td>
+                                    <div class="tech-stack">
+                                        <span class="badge badge-neutral">Python</span>
+                                        <span class="badge badge-neutral">scikit-learn</span>
+                                        <span class="badge badge-neutral">PostgreSQL</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-weight: 500;">18% margin lift</div>
+                                    <div class="text-caption">Gross profit increase</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Experience Page -->
+    <div class="page" id="experience">
+        <div class="container" style="padding-top: 48px; padding-bottom: 80px;">
+            <h1 class="text-h1" style="margin-bottom: 48px;">Experience Timeline</h1>
+            
+            <div style="display: flex; flex-direction: column; gap: 32px;">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                        <div>
+                            <h3 class="text-h3">Principal Technology Consultant</h3>
+                            <p class="text-body-lg" style="color: var(--color-text-secondary); margin-top: 4px;">Independent Consulting</p>
+                        </div>
+                        <span class="badge badge-accent">2022 - Present</span>
+                    </div>
+                    <p class="text-body" style="color: var(--color-text-secondary); margin-bottom: 16px;">
+                        Leading data, analytics, and AI transformation initiatives for Fortune 500 clients across financial services, 
+                        retail, and healthcare. Specializing in ML platform architecture, data modernization, and enterprise AI strategy.
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="badge badge-neutral">ML/AI Strategy</span>
+                        <span class="badge badge-neutral">Data Architecture</span>
+                        <span class="badge badge-neutral">Cloud Migration</span>
+                        <span class="badge badge-neutral">Team Leadership</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                        <div>
+                            <h3 class="text-h3">Senior Data Science Manager</h3>
+                            <p class="text-body-lg" style="color: var(--color-text-secondary); margin-top: 4px;">TechCorp Analytics</p>
+                        </div>
+                        <span class="badge badge-neutral">2018 - 2022</span>
+                    </div>
+                    <p class="text-body" style="color: var(--color-text-secondary); margin-bottom: 16px;">
+                        Built and led team of 12 data scientists and engineers. Delivered production ML systems serving 50M+ users. 
+                        Established MLOps practices and platform engineering standards across organization.
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="badge badge-neutral">Team Management</span>
+                        <span class="badge badge-neutral">MLOps</span>
+                        <span class="badge badge-neutral">Production ML</span>
+                        <span class="badge badge-neutral">Platform Engineering</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                        <div>
+                            <h3 class="text-h3">Lead Data Engineer</h3>
+                            <p class="text-body-lg" style="color: var(--color-text-secondary); margin-top: 4px;">DataFlow Systems</p>
+                        </div>
+                        <span class="badge badge-neutral">2015 - 2018</span>
+                    </div>
+                    <p class="text-body" style="color: var(--color-text-secondary); margin-bottom: 16px;">
+                        Architected data platforms processing 1TB+ daily. Led migration from on-prem to cloud infrastructure. 
+                        Designed real-time streaming pipelines supporting critical business operations.
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="badge badge-neutral">Data Engineering</span>
+                        <span class="badge badge-neutral">AWS/GCP</span>
+                        <span class="badge badge-neutral">Streaming</span>
+                        <span class="badge badge-neutral">ETL/ELT</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                        <div>
+                            <h3 class="text-h3">Data Analyst</h3>
+                            <p class="text-body-lg" style="color: var(--color-text-secondary); margin-top: 4px;">Analytics Innovations</p>
+                        </div>
+                        <span class="badge badge-neutral">2012 - 2015</span>
+                    </div>
+                    <p class="text-body" style="color: var(--color-text-secondary); margin-bottom: 16px;">
+                        Developed analytics dashboards and reporting infrastructure. Built predictive models for customer segmentation 
+                        and churn prediction. Established data quality and governance frameworks.
+                    </p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="badge badge-neutral">Analytics</span>
+                        <span class="badge badge-neutral">SQL</span>
+                        <span class="badge badge-neutral">Visualization</span>
+                        <span class="badge badge-neutral">Statistics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        const tabs = document.querySelectorAll('.tab');
+        const pages = document.querySelectorAll('.page');
+        const topNav = document.getElementById('topNav');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = tab.dataset.page;
+                
+                // Update tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update pages
+                pages.forEach(p => p.classList.remove('active'));
+                document.getElementById(targetPage).classList.add('active');
+            });
+        });
+
+        // Scroll effect for nav
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 0) {
+                topNav.classList.add('scrolled');
+            } else {
+                topNav.classList.remove('scrolled');
+            }
+        });
+
+        // Animate skill bars on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const skillBars = document.querySelectorAll('.skill-bar-fill');
+                skillBars.forEach(bar => {
+                    const targetWidth = bar.dataset.width;
+                    bar.style.width = targetWidth;
+                });
+            }, 300);
+        });
+
+        // Segmented control
+        const segmentedOptions = document.querySelectorAll('.segmented-option');
+        segmentedOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                segmentedOptions.forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+            });
+        });
+
+        // Filter updates (simplified - would connect to actual data filtering)
+        const filterCheckboxes = document.querySelectorAll('[data-filter]');
+        filterCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                console.log('Filter changed:', checkbox.dataset.filter, checkbox.value, checkbox.checked);
+                // In production, this would trigger data filtering
+            });
+        });
+    </script>
+</body>
+</html>
